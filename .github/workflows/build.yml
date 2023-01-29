@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: "Build PDF"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: cachix/install-nix-action@v18
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build PDF
+        run: nix build
+
+      - name: Generate the hash version
+        run: echo "TAG_HASH=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
+      - name: Create GitHub pre-release
+        uses: softprops/action-gh-release@v1
+
+        with:
+          prerelease: true
+          files: ./result/*
+          name: Version ${{ github.run_number }} (${{ env.TAG_HASH }})
+          tag_name: v${{ github.run_number }}-${{ env.TAG_HASH }}
