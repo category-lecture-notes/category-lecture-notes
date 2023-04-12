@@ -1,0 +1,397 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+ \usepackage{tikz-cd} 
+\newcommand{\quotient}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+\newcommand{\Homset}[3]{$\mathcal{$#1$}(#2, #3)}
+
+ \usepackage{enumitem}
+ \usepackage{bbold}
+
+\title{catégorie poly}
+\author{serge.lechenne, Lucas Tabary Maujean, Arthur Adjedj, Balthazar Patchiatchvily, Vincent Lafeychine }
+\date{February 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+I'll start by a question : What does "same" mean ? \newline
+Intuitively, we feel that $(\mathbbm{Z}, <)$ and $(\mathbbm{Q}, <)$ are different as ordered structures, that 
+$(\quotient{\mathbbm{Z}}{4 \mathbbm{Z}})$ and $\quotient{\mathbbm{Z}}{2\mathbbm{Z}} \times \quotient{\mathbbm{Z}}{2\mathbbm{Z}}$ are two "different" groups : \newline 
+-for the former example, $\mathbbm{Q}$ is a dense order, and $\mathbbm{Z}$ is not. \newline
+-for the latter one,$\quotient{\mathbbm{Z}}{4 \mathbbm{Z}}$ is cyclic, and the other is not . \newline \newline
+Clearly, in the sense of two object being the "same" (or not), there is some kind ofinterractions between elements that creates different behaviours. One would say that there is no "structure preserving bijection", for the first one, no bijective order embedding, for the second, no group isomorphism.However, defining "structure" by "I preserver structure" is not a satisfying approach. \newline \newline
+
+Yet, in the two examples, we were able to say those "structures" were different by simply finding a property that one possesses and the other don't. So, instead of trying to state what this general "structure" thing is, let's just look at how it behaves ! That this "structure" is, put it midly, is just relations that the elements have one with another. That what really matters is not to caracterise interractions, but to caracterise the definition of interraction, by grouping objects and those relations in a new object. So, we just simply consider those objets, with, between two objets, a sort of "relation" that would describe the interractions of one between another. \newline
+We therefore give it a name : a category.
+
+\newpage
+\section{Definition of a Category, and internal properties}
+\large \underline{Definition 1 : category} \normalsize: A category is the following things \newline
+\begin{itemize}[noitemsep]
+    \item A collection of objects
+    \item A collection of morphism, or arrows, such that each morphism f has a \textit{domain and codmain}. A morphism f of domain $x$ and codomain $y$ will be written $f : x \rightarrow y$. We also ask the following properties : \begin{itemize}[noitemsep]
+        \item for $f : x \rightarrow y$ and $ g : y \rightarrow z$, there is a morphism called $fg : x \rightarrow z$. Two such morphism $f$ and $g$ will be called \textit{composable} \newline
+        \item  for each element $x$ there is a morphism $1_x : x \rightarrow x$
+        \item for $f,g, h$ composable, we have $f(gh) = (fg)h$
+        \item for $f : x \rightarrow y$, we have $f 1_x = f = 1_y f $
+\end{itemize}
+\end{itemize}
+\newline 
+\noindent 
+\large \underline{Example 1} :  \normalsize
+Some categories are already know : \begin{itemize}[noitemsep]
+\item \textbf{Set}, the category of set, and arrows as functions. 
+\item \textbf{Grp}, the category of Groups, and arrows as group morphism
+\item \textbf{Ring}, the category of rings, and arrows as ring morphism
+\item \textbf{Top}, the category of topological spaces and continous functions \newline
+
+\end{itemize}
+But, a category can be just a reformulation of a known object : 
+\begin{itemize}[noitemsep]
+\item any (pre)ordered set $(P, \leq)$ is a category, named $P$ with objects the element of P, and, between (x, y), a unique $f : x \rightarrow y$ iff $x \leq y$
+\item any graph $(V, E)$ gives rise to a category by considering $V$ as the collection of elements, and having exactly one arrow$f : x \rightarrow y$ iff y is reachable from x.  \newline
+\end{itemize}
+\noindent 
+It is important to note,that the composition $gf$ is comprised in the definition of a category either implicitely (like the first examples), or explicitely with the past two examples. \newline
+\newline
+So, a lot of objects can be naturally described as a category, their internal structure being discribed by arrows and compositions of such arrows. \newline
+Category admit a natural, "graph like" representation : element are points, and morphism are arrows between points. We usually omit the composition arrows and the $1_x$ arrows. the following category, for example, is named $\mathbb{1}$ : \newline
+
+\begin{tikzcd}
+\arrow[loop left]{l}{\mathrm{1}_x} x
+\end{tikzcd}
+\newline
+
+\noindent Now that we defined the concept, let's give some terminology and present classical constructions \newline \newline \newline
+\large \underline{Definition 2 : $\mathcal{C}^{op}$} \normalsize 
+let $\mathcal{C}$ be a category,  \newline We call $\mathcal{C}^{op}$ the category with same object, and for arrows, a morphism \newline  $f^{op} : y \rightarrow x$ for each morphism $f : x \rightarrow y$.
+
+\newline \noindent Example 2 : It is not outright clear to why this construction is important, but it serves to naturally express some concepts, as we will see in, for example : 
+\newline \noindent Given a poset $\mathcal C := (P, \leq)$, $\mathcal{C}^{op}$ is $(P, \geq)$
+\newline \newline
+Our initial objective was to give a general sense to what "same" means : what would be an "isomorphism" in a category. We'll now introduce terminology on arrows.
+\newline \noindent \newline
+\noindent \large \underline{Definition 3 : monomorphism, epimorphism, isomorphism} \normalsize  \newline Let $\mathcal{C}$  be a category \newline
+\begin{itemize}[noitemsep]
+\item We say that $f : x \rightarrow y$ is an epimorphism if, for all $a, b : y \rightarrow z$, $fa = fb \Rightarrow a = b$
+\item We say that $f : x \rightarrow y $ is an epimorphism if $f^{op}$ is a monomorphism, ie forall $a b : z \rightarrow x$ $af = bf \Rightarrow a = b$
+\item We ay that $f : x \righatrrow y $ is an isomorphism if there is $g : y \rightarrow x$ such that $gf = 1_x$ and $fg = 1_y$. If there exists such an $f$, we will say that x and y are \textbf{isomorphic}, and write it $x \cong y$
+\end{itemize}
+\newline \noindent
+It is clear that an isomorphism is a monomorphism and an epimorphism, but the contrary is (true in \textbf{Set}) but NOT true in general : take $f : x \rightarrow y$ in the following category $\mathbb{2}$ : \newline \newline
+\begin{tikzcd}
+x \arrow[loop left, "1_x"] \arrow[r] \arrow[r, "f"] & y \arrow[loop right, "1_y"]
+\end{tikzcd}
+
+\newline  
+\newline
+\noindent
+
+\noindent We say that a category $\mathcal{C}$ that only contains isomorphisms is a \underline{Groupoïd}. \newline
+A special kind of groupoïd is a groupoïd with only one element, that we will call a....group. \newline
+Indeed, given $G \in \textbf{Grp}$, we consider the category comprised of only one element $\Delta$, and, for each $x \in G$, an arrow $x : \Delta \rightarrow \Delta$, composition of arrow is defined by composition of element, and $e$ is the arrow $1_\Delta$. \newline 
+We'll explore this construction more in detail in the next chapter.
+\newline
+
+Indeed, isomorphism are exactly what we wanted to define structure : indeed, two object $x, y$ are said \textbf{isomorphic} if there is an isomorphism between them : it is the category \textit{itself} that defines the notion of structure by defining the isomorphism, as opposite to the "traditionnal" approach, that would define a specific kind of structure (like groups, vector spaces) and then define isomorphism as "bijective maps preserving the structure." \newline 
+
+
+
+
+\newline
+\newline
+\newline
+\noindent \large \underline{Definition 4 : Hom-set, small and locally small categories} \newline \normalsize  Let $\mathcal{C}$ be a category \newline \noindent for all $x, y \in C$, we name  $\mathcal{C}(x, y)$ (also written as $Hom_{\mathcal{\mathcal{C}}(x, y)$ the collection of arrows between x and y. \newline
+We say that a category is \textbf{small} if it has only a set worth of object \newline
+We say that a cateogryis \textbf{locally small} if, for all $x, y \in \mathcal{C}$, $C(x, y)$ is a set.
+\newline
+
+
+\nonident As for nowThe importance of smallness and local smallness don't seem relevant, but the importance of local smallness will be highlithed in the next chapter.
+
+\section{The end \text{?}}
+
+
+The picture seems to be somehow "complete" : we described what "same" means, we gave a general frame of work to study "structures", and gave some terminology. We could simply transpose all of our results from various fields of mathematics in this new language, and everything will be great. \newline \begin{itemize}
+\item One one hand, we have the categories themselves in which inside of them we describes structure.
+\item On other hand, we have a general notion of category that serves as a framework.
+\end{itemize}
+
+\newline
+\noindent However, there is one "little" questions that remains to be answered, and that is on the back of our minds since the definition of $\mathcal{C}^{op}$ : \newline.
+If we flip twice the arrows, we end up with the same category :  $(\mathcal{C}^{op})^{op} = \mathcal{C}$
+the contruction of $\mathcal{C}^{op}$ is taking a category $\mathcal{C}$, keeping the same elements, and, for just every arrow $f : x \rightarrow y$, flipping it around. Moreover, we defined the composition such that $(gf)^{op}$ is $f^{op} g^{op}$, and, of course $(1_{x})^{op} = 1_{x}$.\newline
+
+\newline \noindent  So, the "thing", that we will name $(\text{\_})^{op}$ is sending a category $\mathcal{C}$ to $\mathcal{C}^{op}$ is, "composed" with itself, the "identity over categories". Moreover, it preserves the composition and the indentity arrows. So, $(\text{\_})^{op}$ is a sort of "morphism of category". \newline
+Which would imply that categories \textit{themselves} are a structure ? But what is a morphism of category then ?
+
+\section {Functors}
+The precedent observation motivates the following definition, absolutely central in category theory, becauses it allow us to compare how do categories themselves behave one respectively to another. \newline
+\newline \newline \newpage
+
+\noindent \large \underline{Definition 5 : Covariant Functors} \newline \normalsize \newline
+let $\mathcal{C}$ and $\mathcal{D}$ be categories. \newline
+A covariant Functor is two things : \begin{itemize}[noitemsep]
+\item for each objet $c \in \mathcal{C}$, an object $Fc \in \mathcal{D}$ 
+\item for each arrow $f : x \rightarrow y$, an arrows $Ff : Fx \rightarrow Fy$  \end{itemize}
+And, the arrows $Ff$ needs to satisfy the two following conditions
+\begin{itemize}[noitemsep]
+\item For any composable $f, g$, we have $F(gf) = (Fg) (Ff)$
+\item For all $x \in \mathcal{C}$, we have $F(1_{x}) = 1_{F(x)}$
+\end{itemize}
+
+
+\newline \newline \newline
+\noindent \large \underline{Definition 6 : \textbf{Cat}} \newline \normalsize \newline
+$\textbf{Cat}$ is the category formed with object the categories and arrows the functors between categories. In addition to that, One can now verify that  $(\_)^{op} : \textbf{Cat} \rightarrow \textbf{Cat}$ is indeed a functor.  \newline
+
+\noindent Remark : One can say that this may lead to a foundation problem, because we would have $\textbf{Cat} \in \textbf{Cat}$, which would lead to a Russel-like paradox. However, this text is only an introduction, so I can't bring any satisfactory response to this observation. \newline.
+
+\noindent \large \underline{Example 2 : Group as one object groupoid} \newline \normalsize \newline
+Given a group $ G$, one can construct a one object groupoid BG, as explained previously. We now consider $\textbf{Groupoid}$, the category formed by groupoids and fonctors.  \newline 
+Given two groups $G$,  $G'$ and $\phi : G \rightarrow G'$ a group morphism, we pose $B\phi : BG \rightarrow BG'$ the functor that sends the element $\Delta$ of $BG$ to the element $\Delta'$ of $BG'$, and an arrow $x : \Delta \rightarrow \Delta$ to $\phi(x) : \Delta' \rightarrow \Delta'$. Because $phi$ is a group morphism, it is clear (but verify !) that $BG$ is a functor. \newline \newline
+\textit{in Fine}, we have that $B : \textbf{Grp} \rightarrow \textbf{Groupoid}$ is a functor. \newline
+With this example in mind, we see that it is important to view functor and morphism in a unified way, as functor are just morphism of $\textbf{Cat}$. Now, let's give some more interesting example
+\newline \newline
+
+
+
+\noindent \large \underline{Example 3 : Some example of functors to know} \newline \normalsize \newline
+\begin{itemize}[noitemsep]
+\item The functor $U : \textbf{Grp} \rightarrow Set$ that sends a groupto its base set (and group morphism to the underlining functions). This functor is called a "forgetfull" functor, because it "forgets" the structure. \newline
+\item Given \mathcal{C} a locally small category, and $x \in C$, we name $\mathcal{C}(x, \_) : \mathcal{C} \rightarrow \textbf{Set}$ the functor sending $y$ to the \underline{set} (because \mathcal{C} is locally small) of arrows between $x$ and $y$, and $f : y \rightarrow z$ to the function \newline
+$f^{*}$ :  $\mathcal{C}(x, y) \rightarrow \mathcal{C}(x, z)$ \newline
+$~~~~~~~~~~$ $g ~~~\longmapsto fg$ \newline
+
+
+\item The power set functor $\mathcal{P} : \textbf{Set} \rightarrow \textbf{Set}$ that sends $X$ to $\mathcal{P}(X)$ and $f$
+to the mapping between powerset : $\mathcal{P}(f)(X) := f(X)$ \newline 
+\end{itemize} \newline 
+\noindent From the power set$\mathcal{P}$,  we can define an other "functor" like object  : it sends $X$ to $\mathcal{P}(X)$ but from an arrow $f : X \rightarrow Y$ takes it to the arrow $f^{-1} : \mathcal{P}(Y) \rightarrow \mathcal{P}(X)$. This satisfies the definition of a functor, only not of $\textbf{Set} \rightarrow \textbf{Set}$, but of $\textbf{Set}^{op} \rightarrow \textbf{Set}$, which motivates to consider another kind of functors, to describes this "arrow inversion" functoriallity. \newline
+ 
+\noindent \large \underline{Definition 6 : \textbf{Contravariant functors}} \newline \normalsize \newline
+Given $\mathcal{C}$ and $\mathcal{D}$ two categories, a contravariant functor is a functor F $\mathcal{C}^{op} \mapsto \mathcal{D}$  \newline
+This means that it is two things : 
+\begin{itemize}[noitemsep]
+\item for each objet $c \in \mathcal{C}$, an object $Fc \in \mathcal{D}$ 
+\item for each arrow $f : y \rightarrow x$, an arrows $Ff : Fx \rightarrow Fy$  \end{itemize}
+And, the arrows $Ff$ needs to satisfy the two following conditions
+\begin{itemize}[noitemsep]
+\item For any composable $f, g$, we have $F(gf) = (Fg) (Ff)$
+\item For all $x \in \mathcal{C}$, we have $F(1_{x}) = 1_{F(x)}$
+\end{itemize}
+
+
+\noindent \large \underline{Lemma 1 : \textbf{Functor preserves isomorphism}} \newline \normalsize \newline
+let $F : \mathcal{C} \rightarrow \mathcal{D}$ be a functor, and f be a morphism in $\mathcal{C}$ we then have \newline
+ $f$ iso $\Longrightarrow Ff$ iso \newline
+Proof : let g be the inverse to f, then it is easy to verify that $Fg$ is an inverse to $Ff$ \newline 
+
+
+
+\noindent \underline{Iimportant Remarks : $F(\mathcal{C}$) with arrows $\mathcal{F}f$'s is not a subcategory of $\mathcal{D}$
+!} \newline \normalsize \newline
+Proof : Take the following categories : \newline
+\begin{tikzcd}   A \arrow[r, "f"] & B \\ C \arrow[r, "g"] & D  \end{tikzcd} 
+ \newline and  $\mathbb{3}$ : 
+\begin{tikzcd}   0 \arrow[r, "u"] & 1 \arrow[r, "v"] & 2 \end{tikzcd} \newline
+We consider the functor F that sends A to 0, B to 1, C to 1, D to 2, and f to u, g to v. \newline \newline
+However, $Ff$ and $Fg$ are composable in $\mathbb{3}$, but their composition does not belong to $F$.
+\newpage
+\noindent Analogous sets/groups/.... and bijections/isomorphism/..., we can try to define the fact that two categories have the same property by finding an "isofunctor" between them. Unlike functions however, functor not only transforms the element but also the arrows : we therefore have to account for a sort of surjectivity and injectivty on arrows also. This give rises to the following definitions : \newline
+
+\noindent \large \underline{Definition 8 : \textbf{Fullness and Faithfullness}}} \newline \normalsize \newline
+let $\mathcal{C}$ and $\mathcal{D}$ be a locally small categories $F : \mathcal{C} \rightarrow \mathcal{D}$ be a functor. \begin{itemize}[noitemsep]
+\item We say that $F$ is \textbf{Full} if $\forall x, y \in \mathcal{C}$ the function from $\mathcal{C}(x, y)$ to $\mathcal{D}(Fx, Fy)$ is surjective 
+\item We say that $F$ is \textbf{Faithfull} if $\forall x, y \in \mathcal{C}$ the function from $\mathcal{C}(x, y)$ to $\mathcal{D}(Fx, Fy)$ is injective
+\item we say that $F$ is \textbf{essentially surjective} if, $\forall y \in \mathcal{D}, \exists x st Fx \cong y$
+\end{itemize} \newline 
+\newline
+
+\noindent A full functor is a functor that covers all the possible maps, and a faithfull functor is a functor that you can trust on the maps it covers (hence the names). However, this conditions are \textbf{local} : $given f : x \rightarrow y$ and $g : a \rightarrow b$, with $a \neq b$, $Ff = Fg$  does not contradicts faithfullness.  \newline
+in the following, we will say that a functor $F$ is \textbf{fully faithfull} if it is both faitfull and full.
+\newline \newline
+We also have this useful result :  \newline 
+
+\noindent \large \underline{Prop : \textbf{Fully faithfull functors reflect isomorphism}}} \newline \normalsize \newline
+let $F : \mathcal{C} \rightarrow \mathcal{D}$, then,  $\forall f : x \rightarrow y$, we have \newline $Ff$ isomorphism $\Rightarrow f$ isomorphism 
+\newline
+
+\noindent However, our picture on category theory is not yet complete : what do "same" mean on functor \textit{one with another} ? The first idea (in this categorical setting) would be to make a category where functors are \textit{object},then what is an arrow $\alpha : F \rightarrow G$ ?
+
+\section{natural transformations and representability}
+
+\noindent \large \underline{Definition 9 : \textbf{natural transformation}}} \newline \normalsize \newline
+let $F, G : \mathcal{C} \rightarrow \mathcal{D}$ two functors.
+a \textbf{natural transformation} $\alpha$ between $F$ and $G$ is : \newline -a family of arrows $(\alpha_c : Fc \rightarrow Gc)_{c \in \mathcal{C}}$ such that $\forall x, y \in \mathcal{C}$ and $f \in \mathcal{C}(x, y)$ the following diagramm 
+
+\large
+\begin{center}
+\begin{tikzcd}[colmun sep=huge]
+A \arrow[r, "\alpha_x"] \arrow[d, "Ff" ']
+& B \arrow[d, "Gf"]\\
+C  \arrow[r, "\alpha_d" ']
+&  D
+\end{tikzcd}
+\end{center}
+\normalsize
+commutes, i.e $Gf ~\alpha_x = \alpha_d ~Ff$
+\newline 
+\noindent A natural transformation will  be written $\alpha : F \Rightarrow G$, and will be written diagrammatically as  \newline
+
+\begin{tikzcd}[column sep=huge]
+    \mathcal{C}
+     \arrow[r, bend left=65, "F"{name=F}]
+     \arrow[r, bend right=65, "H"{name=H, swap}]
+     \arrow[from=F.south-|G,to=H,Rightarrow,shorten=2pt,"\alpha"] &
+   \mathcal{D}.
+\end{tikzcd}
+
+\noindent Put it simply, natural transformation is bridge between the arrows $Ff$ and $Gf$, allowing you to go from one functor to another.  \newline \newline 
+We also call a \textbf{natural ismorphism} a natural transformation $\alpha : F \Fightarrow G$ in wich all $\lpha_c$ are isomorphism. Given a functor $F$, a particular example of natural isomorphism is $1_F : F \Rightarrow F$, consisting of the  family $(1_{Fc}})_{c \in \mathcal{C}}$. \newline
+\noindent $1_F$ is a natural transformation. \newline \newline 
+
+
+\noindnet Moreover, given $\alpha : F \Rightarrow G$ and $\beta : G \Rightarrow H$, we write $(\beta * \alpha : F \Rightarrow H)$ the natural transformation $(\beta_c \alpha_c : Fc \rightarrow Hc)_{c \in \mathcal{C}}$. It is a good exercice to verify that indeed, it is a natural transformation. \newline
+This composition is called the \textbf{vertical} composition, because, diagrammitcally, it looks like this : 
+\begin{center}
+
+\begin{tikzcd}[column sep=huge]
+    \mathcal{C}
+     \arrow[r, bend left=65, "F"{name=F}]
+     \arrow[r, "G"{inner sep=0,fill=white,anchor=center,name=G}]
+     \arrow[r, bend right=65, "H"{name=H, swap}]
+     \arrow[from=F.south-|G,to=G,Rightarrow,shorten=2pt,"\alpha"] 
+     \arrow[from=G,to=H.north-|G,Rightarrow,shorten=2pt,"\beta"] &
+   \mathcal{D}.
+\end{tikzcd}
+ = 
+ \begin{tikzcd}[column sep=huge]
+    \mathcal{C}
+     \arrow[r, bend left=65, "F"{name=F}]
+     \arrow[r, bend right=65, "H"{name=H, swap}]
+     \arrow[from=F.south-|G,to=H,Rightarrow,shorten=2pt,"\beta * \alpha"] &
+   \mathcal{D}.
+\end{tikzcd}
+ 
+ 
+\end{center}
+Those two considerations amounts to considering a new kind of categories \newline \newlnie 
+
+\newline
+\noindent \large \underline{Definition 11: \textbf{power category}}} \newline \normalsize \newline
+let  $\mathcal{C}$ and $\mathcal{D}$ be two categories,  \newline We name \textbf{power category}, written $\mathcal{D^C}$, the category \newline
+\begin{itemize}[noitemsep]
+\item with objects functors between $\mathcal{C}$ and $\mathcal{D}$ \newline
+\item and arrows natural transformations (composition being the vertical composition, identity being $1_F$)
+\end{itemize}
+
+\noindent With this definition, we note that a natural isomorphism is an isomorphism in $\mathcal{D^C}$ (verify it ! it is nor hard but serves to familiarize with manipulation of natural transformation and diagrammatic reasonning).
+\newline
+
+\noindent Let's hold on a minute and go back to our favorite category, $\textbf{Set}$. \newline
+in \textbf{Set}, to study two sets X and Y, we can find a pair of inverse between X and Y. Or, instead, we can find a surjective and injective function from X to Y or Y to X. This idea can be translated as a general one inside of category theory with the following definition and theorem: \newline
+
+\noindent \large \underline{Definition 12: \textbf{equivalence of category}}} \newline \normalsize \newline
+let $\mathcal{C, D}$ be categories, and $F : \mathcal{C \rightarrow D}$ and $G : \mathcal{D \rightarrow C}$ be functors. 
+we say that $F$ and $G$ realizes an \textbf{equivalence of categories} if there exist two natural isomorphism $\eta : GF \Rightarrow 1_{\mathcal{C}}$ and $\epsilon : FG \Rightarrow 1_{\mathcal{D}}$ \newline \newline 
+\newline 
+
+\noindent We write an equivalence of category $\mathcal{C} \cong \mathcal{D}$.  \newline \newline 
+This notion of equivalence demonstrate an important point : \newline
+because functors are not functions, we still need to account for their effects on arrows, and $\eta$ and $\epsilon$ are here to rule out this problem, and essentially saying (give it a thought) that their effects on hom-sets also cancel each others, up to isomorphism, and that, indeed, the two categories $\mathcal{C, D}$ behave in the same manner. In the same way it is hard to find the inverse of a function, it is hard to find both $G, \epsilon$ and $\eta$. We therefore introduce this powerful theorem : \newline \newline \newline 
+
+\noindent \large \underline{\textbf{Theorem 1}} \newline \normalsize \newline
+let $\mathcal{C, D}$ be locally small categories, and $F : \mathcal{C \rightarrow D}$. The following are equivalent (assuming the axiom of choice) :  
+\begin{itemize}[noitemsep]
+    \item F is fully faithfull and essentially surjective
+    \item there exists $G : \mathcal{D \rightarrow C}$ such that $F$ anf $G$ realizes an equivalence $\mathcal{C} \cong \mathcal{D}$
+\end{itemize}
+
+\noindent Proof : \newline \newline \newline 
+
+\noindent A natural isomorphism $\alpha : F \Rightarrow G$ can be reframed as a conjugation relation : \newline
+$\forall f : x \rightarrow y$, 
+$Ff = \alpha^{-1}_{y} Gf \alpha_{x}$. \newline
+
+This means that, to study a functor F, one can study an other functor G naturally isomorphic to F. One of the easiest functor to study (in a practical sense) is $\mathcalC(x, \_)$ introduced in section 3. So, it would be interesting, given a Functor F $ \mathcal{C \rightarrow D}$ to know how it behaves relatively to all of the the functors $\mathcal{C}(x, \_)$ (one functor for each $x \in \mathcal{C}$) : the following questions are \newline
+Is there always an $x$ such that $F \cong \mathcal{C}(x, \_)$ ? \newline
+Is there at most (up to isomorphisim) one $x$ such that $F \cong \mathcal{C}(x, \_)$ \newline
+If such an $x$ exists, what properties does it have ? \newline
+
+\newline This question might seem a bit 'out of the hat' : we are talking here about encoding a functor $F : \mathcal{C \rightarrow D}$ (meaning transformations of both elements and arrows) into a \textbf{single} element of $\mathcal{C}$. \newline 
+
+However, given $U : \textbf{Grp} \rightarrow \textbf{Set}$ the forgetfull functor, we have 
+\newline
+$\textbf{Grp}(\mathbb{Z}, \_ \} \cong U$ \newline
+Proof \newline \newline
+Let's pose $\alpha : \textbf{Grp}(\mathbb{Z}, \_ \} \R\rightarrow U$  all group $G, \alpha_G$ is the function \newline
+$\textbf{Grp}(\mathbb{Z}, G) \rightarrow UG$ \newline
+$\phi \longmapsto \phi(0)$
+
+\noindent First, $\alpha$ is a natural transformation : indeed, given $G, H$ two groups, and $\phi : G \rightarrow H$, the following diagramm \newline
+
+
+\large
+\begin{center}
+\begin{tikzcd}[colmun sep=huge]
+\textbf{Grp}(\mathbb{Z}, G) \arrow[r, "\alpha_G"] \arrow[d, "\phi^{*}"']
+& UG \arrow[d, "U\phi"]\\
+\textbf{Grp}(\mathbb{Z}, H)   \arrow[r, "\alpha_H" ']
+&  UH
+\end{tikzcd}
+\end{center}
+\normalsize
+commutes : indeed, given $f : \mathbb{Z} \rightarrow G$, we have \newline 
+$(U\phi)(\alpha_G(f)) = \phi(f(0)) = (\phi \circ f)(0) = \alpha_G((U\phi)(f)). \newline 
+
+\noindent And, given $x \in G$, because $\mathbb{Z}$ is generated by a single element, there is exactly one morphism $\mathbb{Z} \rightarrow G$ such that $ \phi(0) = x$, wich means that every arrow $\alpha_G$ is a bijection (an isomorphism in \textbf{Set}). \newline \newline
+
+\noindent On the contravariant case, we instead use the (contravariant) functor $\mathcal{C}(\_, w)$ : A good example is the fact $\mathcal{P} \cong \textbf{Set}(\{0, 1\}, _)$ \newline
+Proof
+for every $X \in \textbf{Set}$, let's consider the function  $\alpha_X$ := \newline
+\{0, 1\}^X \rightarrow \mathcal{P}(X) \newline 
+$f \longmapsto f^{-1}(1)$
+
+\end{document}
+
+
+
+Let's look at a few example (give them a try yourself before looking at the proof).
+\noindent \newline  In fact, $\textbf{Set}(\{1, 0\}, \_) \cong \mathcal{P}$ \newline
+Proof : \newline
+$\textbf{Set}(\{1, 0\}, \_) \Rightarrow \mathcal{P} $ \newline 
+be the natural transformation $(\alpha_X : {\{0, 1\}}^X\rightarrow \mathcal{P  }(X))_{X \in \textbf{Set}} $ \newline
+Where, for each $X \in \textbf{Set}, \alpha_X$ is the function  $f \mapsto f^{-1}(1)$
+
+\newline \noindent First, it is clear that, for all $X$, $\alpha_X$ is a bijection (therefore an isomorphism in \textbf{Set}) \newline
+And, given $f : X \rightarrow Y$, the following diagramm 
+
+
+
+\large
+\begin{center}
+\begin{tikzcd}[colmun sep=huge]
+\textbf{Set}(\{0, 1\}, X) \arrow[r, "\alpha_x"] \arrow[d, "f^{*}"']
+& \mathcal{P}(X) \arrow[d, "\mathcal{P}f"]\\
+\textbf{Set}(\{0, 1\}, Y))   \arrow[r, "\alpha_d" ']
+&  \mathcal{P}(Y)
+\end{tikzcd}
+\end{center}
+\normalsize
+commutes, i.e, $forall g \in \{0, 1\}^X$ we have $\{f(x) | g(x) = 1 \} = \{ $
+
+
+
+\large
+\begin{center}
+\begin{tikzcd}[colmun sep=huge]
+$\textbf{Set}(\{0, 1\}, X)$ \arrow[r, "\alpha_x"] \arrow[d, "\textbf{Set}(\{0, 1 \})f"']
+& \mathcal{P} \arrow[d, "\mathcal{P}f"]\\
+C  \arrow[r, "\alpha_d" ']
+&  D
+\end{tikzcd}
+\end{center}
+\normalsize
