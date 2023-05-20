@@ -1,17 +1,12 @@
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
   };
 
   outputs = { self, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-
-        texlive =
-          pkgs.texlive.combine { inherit (pkgs.texlive) scheme-medium; };
-
+      let pkgs = import nixpkgs { inherit system; };
       in rec {
         packages = {
           default = let version = self.shortRev or self.lastModifiedDate;
@@ -19,21 +14,16 @@
             name = "category-lecture-notes-${version}";
             fullname = "category-lecture-notes";
 
-            src = ./src;
+            nativeBuildInputs = [ pkgs.typst ];
 
-            nativeBuildInputs = [ texlive ];
+            src = ./.;
 
             configurePhase = ''
-              echo -n "\\newcommand{\\documentVersion}{${version}}" > version.tex
+              echo -n '#let commit_hash = "${version}"' >> src/metadata.typ
             '';
 
-            buildPhase = ''
-              latexmk -shell-escape -interaction=nonstopmode -halt-on-error \
-                -norc -pdflatex="xelatex %O %S" -pdf "main.tex"
-            '';
-
-            installPhase =
-              ''install -m 0644 -vD main.pdf "$out/$fullname.pdf"'';
+            buildPhase = "typst compile src/main.typ";
+            installPhase = "install -m 0644 -vD src/main.pdf $out/$fullname.pdf";
 
             meta = with pkgs.lib; {
               description = "Category lecture notes";
