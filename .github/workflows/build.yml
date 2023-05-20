@@ -2,35 +2,56 @@ name: build
 
 on:
   push:
-    branches:
-      - main
-
-permissions:
-  contents: write
+    branches-ignore: [ main ]
 
 jobs:
   build:
-    name: "Build PDF"
+    name: "Update draft PDF"
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v3
 
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v20
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build PDF
-        run: nix build
+      - name: Fetch GitHub metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "TAG_HASH=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+          echo "PR_NUMBER=$(gh pr view --json number -q .number)" >> $GITHUB_ENV
 
-      - name: Generate the hash version
-        run: echo "TAG_HASH=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+      - name: Build draft PDF
+        run: |
+          nix build
+          cp ./result/category-lecture-notes.pdf ./notes-${{ github.sha }}.pdf
 
-      - name: Create GitHub pre-release
-        uses: softprops/action-gh-release@v1
-
+      - name: Upload draft PDF
+        uses: burnett01/rsync-deployments@5.2.1
         with:
-          prerelease: true
-          files: ./result/*
-          name: Version ${{ github.run_number }} (${{ env.TAG_HASH }})
-          tag_name: v${{ github.run_number }}-${{ env.TAG_HASH }}
+          switches: -avzr
+          path: notes-${{ github.sha }}.pdf
+          remote_path: ${{ secrets.DEPLOY_PATH }}
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_port: ${{ secrets.DEPLOY_PORT }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Update PR with attached draft PDF
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          comment_tag: ci
+          message: PDF generation succeeded for ${{ github.sha }}. [Link to PDF](https://perso.crans.org/v-lafeychine/category-lecture-notes/notes-${{ github.sha }}.pdf)
+          pr_number: ${{ env.PR_NUMBER }}
+
+      - name: Update PR when failed
+        uses: thollander/actions-comment-pull-request@v2
+        if: failure()
+        with:
+          comment_tag: ci
+          message: PDF generation failed for ${{ github.sha }}
+          pr_number: ${{ env.PR_NUMBER }}
