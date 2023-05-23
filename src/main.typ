@@ -27,3 +27,7 @@
 #v(10pt)
 
 #include "introduction.typ"
+#include "definition.typ"
+#include "the_end.typ"
+#include "functors.typ"
+#include "natural_transformations.typ"
