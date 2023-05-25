@@ -20,7 +20,7 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build PDF
-        run: nix build
+        run: nix build '.?submodules=1'
 
       - name: Generate the hash version
         run: echo "TAG_HASH=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
