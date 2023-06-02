@@ -46,10 +46,10 @@ With this example in mind, we see that it is important to view functors and morp
                        g & |-> f g
     $]
 
-  - The powerset functor $cat(P) : Set -> Set$ that sends $X$ to $cat(P)(X)$ and $f$ to the mapping between powersets: $cat(P)(f)(X) := f(X)$. <some_examples>
+  - The powerset functor $pset : Set -> Set$ that sends $X$ to $pset(X)$ and $f$ to the mapping between powersets: $pset(f)(X) := f(X)$. <some_examples>
 ]
 
-From the power set $cat(P)$, we can define another "functor" like object: it sends $X$ to $cat(P)(X)$, but from an arrow $f : X -> Y$ tkaes it to the arrow $f^(-1) : cat(P)(Y) -> cat(P)(X)$. This satisfies the definition of a functor, only not of $Set -> Set$, but of $dual(Set) -> Set$, which motivates us to consider another kind of functors, to describe this "arrow inversion" functoriality.
+From the powerset $pset$, we can define another "functor" like object: it sends $X$ to $pset(X)$, but from an arrow $f : X -> Y$ tkaes it to the arrow $f^(-1) : pset(Y) -> pset(X)$. This satisfies the definition of a functor, only not of $Set -> Set$, but of $dual(Set) -> Set$, which motivates us to consider another kind of functors, to describe this "arrow inversion" functoriality.
 
 #definition(name: "Contravariant functor")[
   Given $cat(C)$ and $cat(D)$ two categories, a contravariant functor is a functor $F : dual(cat(C)) -> cat(D)$.

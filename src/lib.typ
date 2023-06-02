@@ -11,6 +11,9 @@
 #let Set = $bold("Set")$
 #let Top = $bold("Top")$
 
+// Common functions
+#let pset = $cal(P)$
+
 // Common categories functions
 #let cat(x) = $cal(#x)$
 #let dual(x) = $#x^"op"$
