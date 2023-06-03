@@ -18,7 +18,7 @@ The preceding observation motivates the following definition, absolutely central
 ]
 
 #definition(name: Cat)[
-  $Cat$ is the category formed with object the categories and arrows the functors between categories. In addition to that, one can now verify that $dual((\_)) : Cat -> Cat$ is indeed a functor.
+  $Cat$ is the category formed with categories as objects and functors as arrows. In addition to that, one can now verify that $dual((\_)) : Cat -> Cat$ is indeed a functor.
 ]
 
 #remark[
@@ -30,7 +30,7 @@ The preceding observation motivates the following definition, absolutely central
 
   We now consider $Groupoid$, the category formed by groupoids and functors.
 
-  Given two groups $G$ and $G'$ together with a group morphism $phi.alt : G -> G'$. We pose $B phi.alt : B G -> B G'$ as the functor that sends the element $Delta$ of $B G$ to the object $Delta'$ of $B G'$, and an arrow $x : Delta -> Delta$ to $phi.alt(x) : Delta' -> Delta'$. Because $phi.alt$ is a group morphism, it is clear (but verify!) that $B G$ is a functor.
+  Given two groups $G$ and $G'$ together with a group morphism $phi.alt : G -> G'$. We define $B phi.alt : B G -> B G'$ as the functor that sends the object $Delta$ of $B G$ to the object $Delta'$ of $B G'$, and arrows $x : Delta -> Delta$ to $phi.alt(x) : Delta' -> Delta'$. Because $phi.alt$ is a group morphism, it is clear (but verify!) that $B phi.alt$ is a functor.
 
   _In fine_, we have that $B : Grp -> Groupoid$ is a functor.
 ]
@@ -59,7 +59,7 @@ From the powerset $pset$, we can define another "functor" like object: it sends 
     - For each arrow $f : y -> x$, an arrow $F f : F x -> F y$.
 
   And the arrows $F f$ need to satisfy the following two conditions:
-    - For any composable $f$ and $g$, we have $F(g f) = (F g) (F f)$.
+    - For any composable $f$ and $g$, we have $F (g f) = (F f) (F g)$.
     - For all $x in cat(C)$, we have $F(1_x) = 1_(F x)$.
 ]
 
@@ -106,7 +106,7 @@ From the powerset $pset$, we can define another "functor" like object: it sends 
 ]
 
 Analogous sets/groups/... and bijections/isomorphisms/..., we can try to define the fact that two categories have the same properties by finding an "isofunctor" between them.
-Unlike functions however, functors not only transforms the element, but also the arrows: we therefore have to account for a sort of surjectivity and injectivity on arrows as well.
+Unlike functions however, functors not only transforms the element (object), but also the arrows: we therefore have to account for a sort of surjectivity and injectivity on arrows as well.
 This gives rise to the following definitions:
 
 #definition(name: "Fullness and faithfullness")[
@@ -119,7 +119,7 @@ This gives rise to the following definitions:
 ]
 
 A full functor is a functor that covers all the posible maps, and a faithful functor is a functor that you can trust on the maps it covers (hence the names).
-However, these conditions are _local_: given $f : x -> y$ and $g : a -> b$, with $a != b$, $F f = F g$ does not contradict faithfulness.
+However, these conditions are _local_: given $f : x -> y$ and $g : a -> b$, with $f != g$, $F f = F g$ does not contradict faithfulness.
 
 In the following, we will say that a functor $F$ is _fully faithful_ if it is both faithful and full.
 

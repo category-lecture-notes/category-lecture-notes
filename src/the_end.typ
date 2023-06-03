@@ -9,7 +9,7 @@ The picture seems to be somehow "complete": we descibed what "same" means, we ga
 
 However, there is one "little" question that remains to be answered, and that is on the back of our minds since the definition of $dual(cat(C))$: if we flip the arrows twice, we end up with the same category: $dual((dual(cat(C)))) = cal(C)$.
 
-The construction of $dual(cat(C))$ is taking a category $cat(C)$, keeping the same elements, while flipping every arrow. Moreover, we defined the composition such that $dual(g f)$ is $dual(f) dual(g)$, and of course $dual(1_x) = 1_x$.
+The construction of $dual(cat(C))$ is taking a category $cat(C)$, keeping the same objects, while flipping every arrow. Moreover, we defined the composition such that $dual(g f)$ is $dual(f) dual(g)$, and of course $dual(1_x) = 1_x$.
 
 So, the "thing", that we will name $dual((\_))$ is sending a category $cat(C)$ to $dual(cat(C))$ is, "composed" with itself, the "identity over categories". Moreover, it preserves the composition and the identity arrows. So, $dual((\_))$ is sort of a "morphism of categories".
 
