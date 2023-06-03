@@ -8,8 +8,8 @@
     - A collection of objects,
     - A collection of morphism, or arrows, such that each morphism $f$ has a _domain_ and _codomain_. A morphism $f$ of domain $x$ and codomain $y$ will be written $f : x -> y$. We also ask the following properties:
       - for $f : x -> y$ and $g : y -> z$, there is a morphism $g f : x -> z$. Two such morphisms $f$ and $g$ will be called _composable_,
-      - for each element $x$ there is a morphism $1_x : x -> x$,
-      - for $f$, $g$ and $h$ composable, we have $f (g h) = (f g) h$,
+      - for each object $x$ there is a morphism $1_x : x -> x$,
+      - for $f$, $g$ and $h$ composable, we have $h (g f) = (h g) f$,
       - for $f : x -> y$, we have $f 1_x = f = 1_y f$
 ]
 
