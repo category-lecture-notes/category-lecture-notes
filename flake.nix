@@ -1,7 +1,7 @@
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     typst-tikz = {
       url = "github:category-lecture-notes/typst-tikz";
@@ -29,7 +29,7 @@
               echo -n '#let commit_hash = "${version}"' >> src/metadata.typ
             '';
 
-            buildPhase = "typst-tikz compile src/main.typ";
+            buildPhase = "HOME=$(mktemp -d) typst-tikz compile src/main.typ";
             installPhase = "install -m 0644 -vD src/main.pdf $out/$fullname.pdf";
 
             meta = with pkgs.lib; {
