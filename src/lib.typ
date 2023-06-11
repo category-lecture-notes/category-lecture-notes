@@ -18,7 +18,7 @@
 #let cat(x) = $cal(#x)$
 #let dual(x) = $#x^"op"$
 
-#let iso = $tilde.rev.eqq$
+#let iso = $tilde.eqq$
 #let equiv = $tilde.eq$
 
 // Common numbered boxes
@@ -32,7 +32,7 @@
 #let warning = thmbox("box", "Warning")
 
 #let proof(content) = {
-  [_Proof. _];
-  content;
-  place(right, $square.stroked.big$)
+  [_Proof. _]
+  content; h(1fr)
+  $square.stroked.big$
 }

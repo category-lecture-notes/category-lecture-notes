@@ -1,4 +1,3 @@
-#import "../deps/typst-cd/typst-cd.typ": arr, commutative_diagram, node
 #import "lib.typ": *
 
 = Definition of a category, and internal properties
@@ -31,10 +30,9 @@ So, a lot of objects can be naturally described as a category, their internal st
 
 Category admit a natural, "graph like" representation: element are points, and morphism are arrows between points. We usually omit the composition arrows and the $1_x$ arrows. The following category, for example, is named $bold(1)$:
 
-// TODO: Make commutative diagram
-// \begin{tikzcd}
-//   \arrow[loop left]{l}{\one[x]} x.
-// \end{tikzcd}
+#align(center, tikzcd[
+  x \arrow[loop left, "\mathrm{1}_{x}"]
+])
 
 Now that we defined the concept, let's give some terminology and present classical constructions.
 
@@ -58,13 +56,12 @@ Our initial objective was to give a general sense to what "same" means: what wou
     - an isomorphism if there exists a $g : y -> x$ such that $g f = 1_x$ and $f g = 1_y$. If there exists such an $f$, we will say that $x$ and $y$ are _isomorphic_, and write it $x iso y$.
 ]
 
-It is clear that an isomorphism is a monomorphism and an epimorphism, but the contrary is (true in *Set*) but NOT in general: take $f : x -> y$ in the following category $bold(2)$:
+It is clear that an isomorphism is a monomorphism and an epimorphism, but the contrary is (true in $Set$) but NOT in general: take $f : x -> y$ in the following category $bold(2)$:
 
-// TODO: Make commutative diagram
-// \begin{tikzcd}
-//   x \arrow[loop left, "1_x"] \arrow[r] \arrow[r, "f"]
-//   & y. \arrow[loop right, "1_y"] % TODO
-// \end{tikzcd}
+#align(center, tikzcd[
+  x \arrow[loop left, "\mathrm{1}_{x}"] \arrow[r, "f"] &
+  y \arrow[loop right, "\mathrm{1}_{y}"]
+])
 
 We say that a category $cat(C)$ that only contains isomorphisms is a _groupoid_.
 

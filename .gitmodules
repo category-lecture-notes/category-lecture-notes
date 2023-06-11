@@ -1,6 +1,3 @@
 [submodule "deps/typst-theorems"]
 	path = deps/typst-theorems
 	url = https://github.com/sahasatvik/typst-theorems
-[submodule "deps/typst-cd"]
-	path = deps/typst-cd
-	url = https://gitlab.com/giacomogallina/typst-cd
