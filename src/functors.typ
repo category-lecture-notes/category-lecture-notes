@@ -1,4 +1,3 @@
-#import "../deps/typst-cd/typst-cd.typ": arr, commutative_diagram, node
 #import "lib.typ": *
 
 = Functors
@@ -49,7 +48,7 @@ With this example in mind, we see that it is important to view functors and morp
   - The powerset functor $pset : Set -> Set$ that sends $X$ to $pset(X)$ and $f$ to the mapping between powersets: $pset(f)(X) := f(X)$. <some_examples>
 ]
 
-From the powerset $pset$, we can define another "functor" like object: it sends $X$ to $pset(X)$, but from an arrow $f : X -> Y$ tkaes it to the arrow $f^(-1) : pset(Y) -> pset(X)$. This satisfies the definition of a functor, only not of $Set -> Set$, but of $dual(Set) -> Set$, which motivates us to consider another kind of functors, to describe this "arrow inversion" functoriality.
+From the powerset $pset$, we can define another "functor" like object: it sends $X$ to $pset(X)$, but from an arrow $f : X -> Y$ takes it to the arrow $f^(-1) : pset(Y) -> pset(X)$. This satisfies the definition of a functor, only not of $Set -> Set$, but of $dual(Set) -> Set$, which motivates us to consider another kind of functors, to describe this "arrow inversion" functoriality.
 
 #definition(name: "Contravariant functor")[
   Given $cat(C)$ and $cat(D)$ two categories, a contravariant functor is a functor $F : dual(cat(C)) -> cat(D)$.
@@ -77,27 +76,24 @@ From the powerset $pset$, we can define another "functor" like object: it sends 
 
   #proof[
     Take the following categories:
-    #align(center)[
-      #commutative_diagram(
-        node((0, 0), [$A$]),
-        node((0, 1), [$B$]),
-        node((0, 2), [$C$]),
-        node((0, 3), [$D$]),
-        arr((0, 0), (0, 1), [$f$]),
-        arr((0, 2), (0, 3), [$g$]),
-      )
-    ]
 
-    And $3$:
-    #align(center)[
-      #commutative_diagram(
-        node((0, 0), [$0$]),
-        node((0, 1), [$1$]),
-        node((0, 2), [$2$]),
-        arr((0, 0), (0, 1), [$u$]),
-        arr((0, 1), (0, 2), [$v$]),
-      )
-    ]
+    #align(center,
+      tikzcd[
+          A &&& B &&& C &&& D
+	\arrow["f"', from=1-1, to=1-4]
+	\arrow["g"', from=1-7, to=1-10]
+      ]
+    )
+    
+    and $3$:
+
+    #align(center,
+      tikzcd[
+        0 &&& 1 &&& 2
+	\arrow["u"', from=1-1, to=1-4]
+	\arrow["v"', from=1-4, to=1-7]
+      ]
+    )
 
     We consider the functor $F$ that sends $A$ to 0, $B$ to 1, $C$ to 1, $D$ to 2, $f$ to $u$, and $g$ to $v$.
 
