@@ -9,6 +9,7 @@
   A _natural transformation_ $alpha$ between $F$ and $G$ is a family of arrows $(alpha_c : F c -> G c)_(c in cat(C))$ such that for all $x, y in cat(C)$ and $f in cat(C)(x, y)$ the following diagram commutes (_i.e._ $G f alpha_x = alpha_y F f$):
 
   #align(center, tikzcd[
+    ```
     Fx && Gx \\
     \\
     Fy && Gy
@@ -16,16 +17,19 @@
     \arrow["{\alpha_x}"', from=1-1, to=1-3]
     \arrow["Gf"', from=1-3, to=3-3]
     \arrow["{\alpha_y}"', from=3-1, to=3-3]
+    ```
   ])
 
   A natural transformation will be written $alpha : F => G$, and will be written diagrammatically as:
 
   #align(center, tikzcd[
+    ```
     \mathcal{C}
-         \arrow[r, bend left=65, "F"{name=F}]
-         \arrow[r, bend right=65, "H"{name=H, swap}]
-         \arrow[from=F.south-|H,to=H,Rightarrow,shorten=2pt,"\alpha"] &
-    \mathcal{D}.
+    \arrow[r, bend left=65, "F"{name=F}]
+    \arrow[r, bend right=65, "H"{name=H, swap}]
+    \arrow[from=F.south-|H,to=H,Rightarrow,shorten=2pt,"\alpha"] &
+    \mathcal{D}
+    ```
   ])
 ]
 
@@ -41,19 +45,23 @@ This composition is called the _vertical_ composition because diagrammatically, 
 
 #align(center, grid(columns: 3, gutter: 3em,
   tikzcd[
+    ```
     {\mathcal C} && {\mathcal D}
     \arrow[""{name=0, anchor=center, inner sep=0}, "G"'{pos=0.7}, from=1-1, to=1-3]
     \arrow[""{name=1, anchor=center, inner sep=0}, "F", curve={height=-30pt}, from=1-1, to=1-3]
     \arrow[""{name=2, anchor=center, inner sep=0}, "H"', curve={height=30pt}, from=1-1, to=1-3]
     \arrow["\alpha"', shorten <=4pt, shorten >=4pt, Rightarrow, from=1, to=0]
     \arrow["\beta"', shorten <=4pt, shorten >=4pt, Rightarrow, from=0, to=2]
+    ```
   ],
   align(horizon, $=$),
   tikzcd[
+    ```
     {\mathcal C} && {\mathcal D}
     \arrow[""{name=0, anchor=center, inner sep=0}, "F", curve={height=-30pt}, from=1-1, to=1-3]
     \arrow[""{name=1, anchor=center, inner sep=0}, "H"', curve={height=30pt}, from=1-1, to=1-3]
     \arrow["{\beta * \alpha}"', shorten <=8pt, shorten >=8pt, Rightarrow, from=0, to=1]
+    ```
   ]
 ))
 
@@ -116,6 +124,7 @@ However, given $U : Grp -> Set$ the forgetful functor, we have $Grp(ZZ, \_) iso 
   First, $alpha$ is a natural transformation: indeed, given two groups $G$ and $H$, together with $phi.alt : G -> H$, the following diagram commutes:
 
   #align(center, tikzcd[
+    ```
     {\mathbf{Grp}(\mathbb{Z}, G)} && UG \\
     \\
     {\mathbf{Grp}(\mathbb{Z}, H)} && UH
@@ -123,6 +132,7 @@ However, given $U : Grp -> Set$ the forgetful functor, we have $Grp(ZZ, \_) iso 
     \arrow["{\phi^*}"', from=1-1, to=3-1]
     \arrow["U\phi"', from=1-3, to=3-3]
     \arrow["{\alpha_H}"', from=3-1, to=3-3]
+    ```
   ])
 
   Indeed, given $f : ZZ -> G$, we have $ (U phi.alt)(alpha_G(f)) = phi.alt(f(1)) = (phi.alt compose f)(1) = alpha_G((U phi.alt)(f)) $
@@ -154,6 +164,7 @@ In fact, $Set({0, 1}, \_) iso pset$.
   And, given $f : X -> Y$, the following diagram commutes (_i.e._ for all $g in {0, 1}^X$ we have ${f(x) | g(x) = 1} = "TODO"$):
 
   #align(center, tikzcd[
+    ```
     {\mathbf{Set}(\{0, 1\}, X)} && {\mathcal{P}(Y)} \\
     \\
     {\mathbf{Set}(\{0, 1\}, Y)} && {\mathcal{P}(Y)}
@@ -161,5 +172,6 @@ In fact, $Set({0, 1}, \_) iso pset$.
     \arrow["{f^*}"', from=1-1, to=3-1]
     \arrow["{\mathcal{P}f}"', from=1-3, to=3-3]
     \arrow["{\alpha_Y}"', from=3-1, to=3-3]
+    ```
   ])
 ]

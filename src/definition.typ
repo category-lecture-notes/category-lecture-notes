@@ -31,7 +31,9 @@ So, a lot of objects can be naturally described as a category, their internal st
 Category admit a natural, "graph like" representation: element are points, and morphism are arrows between points. We usually omit the composition arrows and the $1_x$ arrows. The following category, for example, is named $bold(1)$:
 
 #align(center, tikzcd[
+  ```
   x \arrow[loop left, "\mathrm{1}_{x}"]
+  ```
 ])
 
 Now that we defined the concept, let's give some terminology and present classical constructions.
@@ -59,8 +61,10 @@ Our initial objective was to give a general sense to what "same" means: what wou
 It is clear that an isomorphism is a monomorphism and an epimorphism, but the contrary is (true in $Set$) but NOT in general: take $f : x -> y$ in the following category $bold(2)$:
 
 #align(center, tikzcd[
+  ```
   x \arrow[loop left, "\mathrm{1}_{x}"] \arrow[r, "f"] &
   y \arrow[loop right, "\mathrm{1}_{y}"]
+  ```
 ])
 
 We say that a category $cat(C)$ that only contains isomorphisms is a _groupoid_.
