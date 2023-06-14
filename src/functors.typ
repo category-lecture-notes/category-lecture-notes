@@ -77,23 +77,23 @@ From the powerset $pset$, we can define another "functor" like object: it sends 
   #proof[
     Take the following categories:
 
-    #align(center,
-      tikzcd[
-          A &&& B &&& C &&& D
-	\arrow["f"', from=1-1, to=1-4]
-	\arrow["g"', from=1-7, to=1-10]
-      ]
-    )
+    #align(center, tikzcd[
+      ```
+      A &&& B &&& C &&& D
+      \arrow["f"', from=1-1, to=1-4]
+      \arrow["g"', from=1-7, to=1-10]
+      ```
+    ])
     
     and $3$:
 
-    #align(center,
-      tikzcd[
-        0 &&& 1 &&& 2
-	\arrow["u"', from=1-1, to=1-4]
-	\arrow["v"', from=1-4, to=1-7]
-      ]
-    )
+    #align(center, tikzcd[
+      ```
+      0 &&& 1 &&& 2
+      \arrow["u"', from=1-1, to=1-4]
+      \arrow["v"', from=1-4, to=1-7]
+      ```
+    ])
 
     We consider the functor $F$ that sends $A$ to 0, $B$ to 1, $C$ to 1, $D$ to 2, $f$ to $u$, and $g$ to $v$.
 
