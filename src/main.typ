@@ -20,8 +20,8 @@
 #align(center)[
     #align(center, text(17pt)[Category Theory: Lecture Notes])
 
-    Serge Lechenne #h(40pt) Lucas Tabary Maujean #h(40pt) Arthur Adjedj \
-    Balthazar Patchiatchvily #h(40pt) Vincent Lafeychine
+    Serge Lechenne #h(40pt) Mathias Adam Møller #h(40pt) Vincent Lafeychine \
+    Lucas Tabary Maujean #h(40pt) Arthur Adjedj #h(40pt) Balthazar Patchiatchvily
 ]
 
 #v(10pt)
