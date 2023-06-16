@@ -152,10 +152,10 @@ On the contravariant case, we instead use the (contravariant) functor $cat(C)(\_
 
 Let's look at a few examples.
 
-In fact, $Set({0, 1}, \_) iso pset$.
+In fact, $Set(\_, {0, 1}) iso pset$.
 
 #proof[
-  We define $alpha : Set({0,1}, \_) => pset$ as the natural transformation $(alpha_X : {0,1}^X -> pset(X))_(X in Set)$.
+  We define $alpha : Set(\_, {0,1}) => pset$ as the natural transformation $(alpha_X : {0,1}^X -> pset(X))_(X in Set)$.
 
   Where, for each $X in Set$, $alpha_X$ is the function $f |-> f^(-1)(1)$.
 
@@ -165,9 +165,9 @@ In fact, $Set({0, 1}, \_) iso pset$.
 
   #align(center, tikzcd[
     ```
-    {\mathbf{Set}(\{0, 1\}, X)} && {\mathcal{P}(Y)} \\
+    {\mathbf{Set}(X, \{0, 1\})} && {\mathcal{P}(Y)} \\
     \\
-    {\mathbf{Set}(\{0, 1\}, Y)} && {\mathcal{P}(Y)}
+    {\mathbf{Set}(Y, \{0, 1\})} && {\mathcal{P}(Y)}
     \arrow["{\alpha_X}"', from=1-1, to=1-3]
     \arrow["{f^*}"', from=1-1, to=3-1]
     \arrow["{\mathcal{P}f}"', from=1-3, to=3-3]
