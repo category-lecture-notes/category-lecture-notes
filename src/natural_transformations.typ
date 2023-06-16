@@ -161,7 +161,7 @@ In fact, $Set({0, 1}, \_) iso pset$.
 
   First, it is clear that, for all $X$, $alpha_X$ is a bijection (therefore an isomorphism in $Set$).
 
-  And, given $f : X -> Y$, the following diagram commutes (_i.e._ for all $g in {0, 1}^X$ we have ${f(x) | g(x) = 1} = "TODO"$):
+  And, given $f : X -> Y$, the following diagram commutes:
 
   #align(center, tikzcd[
     ```
