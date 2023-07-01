@@ -1,4 +1,4 @@
-#import "../deps/typst-theorems/theorems.typ": thmbox
+#import "@vendor/typst-theorems:1.0.0": thmbox
 
 // Prevent using fraction
 #let quotient(numerator, denominator) = { numerator; "/"; denominator }

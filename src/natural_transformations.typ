@@ -1,5 +1,5 @@
 #import "lib.typ": *
-#import "../deps/typst-theorems/theorems.typ": thmref
+#import "@vendor/typst-theorems:1.0.0": thmref
 
 = Natural Transformations
 
