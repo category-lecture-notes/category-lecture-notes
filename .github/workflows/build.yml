@@ -44,7 +44,7 @@ jobs:
 
       - name: Build draft PDF
         run: |
-          nix build '.?submodules=1'
+          nix build --print-build-logs '.?submodules=1'
           cp ./result/category-lecture-notes.pdf ./notes-${{ github.sha }}.pdf
 
       - name: Upload draft PDF
